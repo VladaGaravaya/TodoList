@@ -7,23 +7,30 @@ window.onload = function () {
 
     function out(todos) {
         document.getElementById("out").innerHTML = '';
-        for (var i=0; i<todos.length; i++) {
-            var button = document.createElement('button');
-            var span = document.createElement('span');
-            var br = document.createElement('br');          
-            button.addEventListener('click', function () {
-                todoList.remove(this.value);
+        for (var i = 0; i<todos.length; i++) {
+            var li = document.createElement('li');  
+            li.innerHTML = todos[i].name;
+
+            var span = document.createElement("span");
+            span.className = "close";
+            span.innerHTML = "&times;";
+            li.appendChild(span);
+
+            span.addEventListener('click', function () {
+                var str = this.parentElement.innerText;
+                todoList.remove(str.substr(0, str.indexOf("\n")));
                 out(todoList.todos);
             });
-            button.value = todos[i].name;
-            button.innerHTML = "x";
-            span.innerHTML = todos[i].name;
+            document.getElementById('out').appendChild (li);
+
+
             if(todos[i].check) {
-                span.className = "check";
+                li.className = "check";
             }
-            span.addEventListener('click', function () {
+            li.addEventListener('click', function () {
+                var str = this.innerText.substr(0, this.innerText.indexOf("\n"));
                 for(let i=0; i < todoList.todos.length; i++) {
-                    if(todoList.todos[i].name == this.innerText) {
+                    if(todoList.todos[i].name == str) {
                         todoList.todos[i].check = !(todoList.todos[i].check);
                         if(todoList.todos[i].check) {
                             this.className="check";
@@ -35,15 +42,14 @@ window.onload = function () {
                 }
                 todoList.toLocalStorage();
             });
-            document.getElementById('out').appendChild (span);
-            document.getElementById('out').appendChild (button);
-            document.getElementById('out').appendChild (br);
+            
         }
         
     }
 
-    document.getElementById("add").onclick = function() {
-        let value = document.getElementById("in").value;
+    document.getElementById("in").addEventListener('keydown', function(e) {
+        if (e.keyCode === 13) {
+          let value = document.getElementById("in").value;
         if (value) {
             todoList.add(value);
         }
@@ -51,16 +57,11 @@ window.onload = function () {
             confirm("Enter some words..");
         }
         document.getElementById("in").value = "";
-        /*if (document.getElementById("data").value != "") {
-            let date = document.getElementById("data").value;
-            let temp = date.split(" ");
-            date = temp[0].split("-").concat(temp[1].split(":"));
-            temp = new Date(+date[0]+2000,+date[1]-1,+date[2], +date[3], +date[4]);
-            date = new Date;
-            console.log(temp-date);
-        }*/
         out(todoList.todos);
-    }
+        }
+    });
+        
+    
 
     document.getElementById("delCheckList").onclick = function () {
         if(confirm("Are you sure?")) {
