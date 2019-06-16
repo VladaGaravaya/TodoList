@@ -1,24 +1,17 @@
 <!DOCTYPE html>
 <html>
-<head>
-<script src="dist/main.js"></script>
-<style>
-    .check {
-        text-decoration: line-through;
-    }
-</style>
-</head>
-<body>
-<input id="search" placeholder="Search by name.." type="text">
-<div id="out">
+  <head>
+    <script src="dist/main.js"></script>
+    <link href="src/index.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="wrapper">
+      <input id="search" placeholder="Search by name.." type="text">
+      <ul id="out">
 
-</div>
-<input id="in" placeholder="Input task.." type="text"> 
-<!--Deathline:
-<input id="data" placeholder="YY-MM-DD HH:MM" type="text"> -->
-<button id="add">Add</button>
-<button id="delCheckList">Delete all checked task</button>
-
-
-</body>
+      </ul>
+      <input id="in" placeholder="Input task.." type="text"> 
+      <a href="#"  id="delCheckList" class="button9">Delete all checked tasks</a>
+    </div>
+  </body>
 </html>
